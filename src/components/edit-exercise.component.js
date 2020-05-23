@@ -11,6 +11,7 @@ export default class EditExercise extends Component {
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeDuration = this.onChangeDuration.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeDueDate = this.onChangeDueDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
@@ -18,6 +19,7 @@ export default class EditExercise extends Component {
       description: '',
       duration: 0,
       date: new Date(),
+      ddate: new Date(),
       users: []
     }
   }
@@ -29,7 +31,8 @@ export default class EditExercise extends Component {
           username: response.data.username,
           description: response.data.description,
           duration: response.data.duration,
-          date: new Date(response.data.date)
+          date: new Date(response.data.date),
+          ddate: new Date(response.data.ddate)
         })
       })
       .catch(function (error) {
@@ -74,6 +77,12 @@ export default class EditExercise extends Component {
     })
   }
 
+  onChangeDueDate(date) {
+    this.setState({
+      ddate: date
+    })
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
@@ -81,7 +90,8 @@ export default class EditExercise extends Component {
       username: this.state.username,
       description: this.state.description,
       duration: this.state.duration,
-      date: this.state.date
+      date: this.state.date,
+      ddate: this.state.ddate
     }
 
     console.log(exercise);
@@ -138,6 +148,15 @@ export default class EditExercise extends Component {
             <DatePicker
               selected={this.state.date}
               onChange={this.onChangeDate}
+            />
+          </div>
+        </div>
+        <div className="form-group">
+          <label>Due Date: </label>
+          <div>
+            <DatePicker
+              selected={this.state.ddate}
+              onChange={this.onChangeDueDate}
             />
           </div>
         </div>
